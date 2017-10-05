@@ -1,25 +1,26 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<map version="1.0" tiledversion="1.0.3" orientation="orthogonal" renderorder="right-down" width="240" height="13" tilewidth="16" tileheight="16" nextobjectid="31">
+<map version="1.0" tiledversion="1.0.3" orientation="orthogonal" renderorder="right-down" width="240" height="13" tilewidth="16" tileheight="16" nextobjectid="50">
  <tileset firstgid="1" source="t4.tsx"/>
  <layer name="background" width="240" height="13">
   <data encoding="base64" compression="zlib">
    eJztw7ENAAAMAiDT/z928YpukNBLqqqqqqqqqqqqqqqq+ngvgAwl
   </data>
  </layer>
- <objectgroup name="coins"/>
+ <objectgroup name="coins">
+  <object id="45" x="338" y="128" width="12" height="15"/>
+  <object id="49" x="465" y="81" width="14" height="14"/>
+ </objectgroup>
  <layer name="graphics" width="240" height="13">
   <data encoding="base64" compression="zlib">
    eJzt1rENwjAUhOHnUJGOFjEBjMQMqYFBSCRgDkCCzMEqScchuaChQNhOQv5POrnzc3N6NgOAz/aZWalUWdcvAfCts3p7Ua70F0jmob7NJ+xNYIga9bZlbwK9dlA/j8opck8XPmt/AvjdTb29KzV7FgCAQXr/H/NHBro3dWa5+585wJgs1alVgl695hT0FwgqVH83umOr7Pxds0hzgLFwhJAkieEJvbARwA==
   </data>
  </layer>
  <objectgroup name="bricks">
-  <object id="22" x="336" y="129.333" width="14.6667" height="13.3333"/>
   <object id="23" x="320.667" y="129.333" width="14.6667" height="14"/>
-  <object id="24" x="353.333" y="130.667" width="13.3333" height="12.6667"/>
-  <object id="26" x="368.667" y="130" width="14" height="13.3333"/>
+  <object id="24" x="353.333" y="129.667" width="13.3333" height="12.6667"/>
+  <object id="26" x="369.667" y="130" width="14" height="13.3333"/>
   <object id="27" x="431.333" y="82" width="15.3333" height="13.3333"/>
   <object id="28" x="447.333" y="82" width="15.3333" height="12.6667"/>
-  <object id="29" x="465.333" y="80.6667" width="12.6667" height="14"/>
   <object id="30" x="480" y="82" width="14" height="13.3333"/>
  </objectgroup>
  <objectgroup name="pipes">

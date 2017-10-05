@@ -16,5 +16,14 @@ public class Coin extends  InteractiveTileObject {
     public Coin(World world, TiledMap map, Rectangle bounds)
     {
         super(world,map,bounds);
+        fixture.setUserData(this);
+        setCategoryFilter(MyGdxGame.COIN_BIT);
     }
+
+    @Override
+    public void onHeadHit() {
+
+    }
+
+
 }

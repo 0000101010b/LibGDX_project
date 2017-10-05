@@ -27,6 +27,7 @@ import com.mygdx.game.MyGdxGame;
 import com.mygdx.game.Scenes.Hud;
 import com.mygdx.game.Sprites.Player;
 import com.mygdx.game.Tools.B2WorldCreator;
+import com.mygdx.game.Tools.WorldContactListener;
 
 import sun.rmi.runtime.Log;
 
@@ -76,6 +77,8 @@ public class PlayScreen implements Screen {
 
         new B2WorldCreator(world,map);
         player = new Player(world,this);
+
+        world.setContactListener(new WorldContactListener());
 
     }
     public  TextureAtlas getAtlas(){
@@ -142,6 +145,9 @@ public class PlayScreen implements Screen {
         game.batch.begin();
         player.draw(game.batch);
         game.batch.end();
+
+
+
 
         game.batch.setProjectionMatrix(hud.stage.getCamera().combined);
         hud.stage.draw();
