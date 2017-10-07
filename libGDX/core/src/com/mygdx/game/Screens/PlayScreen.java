@@ -7,6 +7,7 @@ import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.TextureAtlas;
+import com.badlogic.gdx.input.GestureDetector;
 import com.badlogic.gdx.maps.MapObject;
 import com.badlogic.gdx.maps.objects.RectangleMapObject;
 import com.badlogic.gdx.maps.tiled.TiledMap;
@@ -35,11 +36,16 @@ import sun.rmi.runtime.Log;
  * Created by BenTh on 03/10/2017.
  */
 
-public class PlayScreen implements Screen {
+public class PlayScreen implements Screen, GestureDetector.GestureListener {
 
     private MyGdxGame game;
     private TextureAtlas atlas;
 
+
+    private GestureDetector gestureDetector;
+    private boolean isLeft=false;
+    private boolean isRight=false;
+    private boolean doJump=false;
     //Texture texture;
 
     private OrthographicCamera gamecam;
@@ -57,6 +63,8 @@ public class PlayScreen implements Screen {
     private Player player;
 
     public PlayScreen(MyGdxGame game){
+
+
         atlas = new TextureAtlas("Mario_and_Enemies.pack");
 
         this.game = game;
@@ -80,6 +88,8 @@ public class PlayScreen implements Screen {
 
         world.setContactListener(new WorldContactListener());
 
+        gestureDetector = new GestureDetector(this);
+        Gdx.input.setInputProcessor(gestureDetector);
     }
     public  TextureAtlas getAtlas(){
         return  atlas;
@@ -96,6 +106,9 @@ public class PlayScreen implements Screen {
             gamecam.position.x += 100 * dt;
         */
 
+
+
+
         if (Gdx.input.isKeyPressed(Input.Keys.UP)) {
             if (!keyPressed) {
                 keyPressed = true;
@@ -110,12 +123,25 @@ public class PlayScreen implements Screen {
             Gdx.app.log("Debug", "Back pressed!");
             player.b2body.applyLinearImpulse(new Vector2(0, 4f), player.b2body.getWorldCenter(), true);
         }*/
+
+        if(doJump)
+            isRight=isLeft=false;
+
+        if(!Gdx.input.isTouched())
+            isRight=isLeft=false;
+
+        if(isRight &&player.b2body.getLinearVelocity().x <= 2)
+            player.b2body.applyLinearImpulse(new Vector2(0.1f, 0), player.b2body.getWorldCenter(), true);
+
+        if(isLeft &&player.b2body.getLinearVelocity().x >= -2)
+            player.b2body.applyLinearImpulse(new Vector2(-0.1f, 0), player.b2body.getWorldCenter(), true);
+
         if (Gdx.input.isKeyPressed(Input.Keys.RIGHT) && player.b2body.getLinearVelocity().x <= 2)
             player.b2body.applyLinearImpulse(new Vector2(0.1f, 0), player.b2body.getWorldCenter(), true);
 
         if (Gdx.input.isKeyPressed(Input.Keys.LEFT) && player.b2body.getLinearVelocity().x >= -2)
             player.b2body.applyLinearImpulse(new Vector2(-0.1f, 0), player.b2body.getWorldCenter(), true);
-
+        doJump=false;
     }
 
     public void update(float dt)
@@ -187,6 +213,64 @@ public class PlayScreen implements Screen {
         world.dispose();
         b2dr.dispose();
         hud.dispose();
+
+    }
+
+    @Override
+    public boolean touchDown(float x, float y, int pointer, int button) {
+        if(y > Gdx.graphics.getHeight()/2) {
+            if (x > Gdx.graphics.getWidth() / 2)
+                isRight = true;
+            else
+                isLeft = true;
+        }
+        return true;
+    }
+
+    @Override
+    public boolean tap(float x, float y, int count, int button) {
+
+        if(Gdx.graphics.getWidth()-200 < x && Gdx.graphics.getHeight()-200 < y) {
+            player.b2body.applyLinearImpulse(new Vector2(0, 4f), player.b2body.getWorldCenter(), true);
+            doJump=true;
+        }
+        return true;
+    }
+
+    @Override
+    public boolean longPress(float x, float y) {
+        return false;
+    }
+
+    @Override
+    public boolean fling(float velocityX, float velocityY, int button) {
+
+
+        return true;
+    }
+
+    @Override
+    public boolean pan(float x, float y, float deltaX, float deltaY) {
+        return false;
+    }
+
+    @Override
+    public boolean panStop(float x, float y, int pointer, int button) {
+        return false;
+    }
+
+    @Override
+    public boolean zoom(float initialDistance, float distance) {
+        return false;
+    }
+
+    @Override
+    public boolean pinch(Vector2 initialPointer1, Vector2 initialPointer2, Vector2 pointer1, Vector2 pointer2) {
+        return false;
+    }
+
+    @Override
+    public void pinchStop() {
 
     }
 }
